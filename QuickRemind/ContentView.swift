@@ -10,6 +10,8 @@ import SwiftUI
 import EventKit
 
 struct ContentView : View {
+    @ObjectBinding private var kGuardian = KeyboardGuardian(textFieldCount: 1)
+    @State private var name = Array<String>.init(repeating: "", count: 1)
     
     @State var reminderText: String = ""
     @State var reminderDate: Date = Date()
@@ -19,16 +21,21 @@ struct ContentView : View {
     var body: some View {
         VStack {
             Spacer()
-            Text("Remind me to \(formatReminderText()) on \(formatDate())")
+            HStack {
+                Text("Add a reminder")
+                    .font(.largeTitle)
+                    .padding()
+                Spacer()
+            }
+            
+            
+            Text("Remind me to \(formatReminderText()) on \(formatDate()).")
                 .lineLimit(nil)
                 .padding()
                 .background(Color(red: 30/255, green: 225/255, blue: 230/255, opacity: 0.4))
                 .cornerRadius(20)
             
-            
             DatePicker($reminderDate)
-            
-            
             
             HStack {
                     Button(action: {
@@ -58,17 +65,17 @@ struct ContentView : View {
                 .lineLimit(nil)
             
             
+            
             Button(action: {
                 self.saveReminder()
             }, label: {
                 Text("Save")
             }).buttonStyle(.save)
+                .background(GeometryGetter(rect: $kGuardian.rects[0]))
             
            Spacer()
-        }.background(Color(red: 250/255, green: 250/255, blue: 250/255))
-        
-        
-        
+        }.offset(y: kGuardian.slide).animation(.basic(duration: 1.0))
+            .background(Color(red: 250/255, green: 250/255, blue: 250/255))
         
     }
     
@@ -97,15 +104,16 @@ struct ContentView : View {
         
       
         do {
-            try eventStore.save(reminder,
-                                commit: true)
+            if reminderText != "" {
+                try eventStore.save(reminder,
+                                    commit: true)
+            }
+            
         } catch let error {
             print("Reminder failed with error \(error.localizedDescription)")
         }
-        withAnimation(.spring()){
-            reminderText = ""
-        }
-
+        
+        reminderText = ""
         reminderDate = Date()
     }
     
@@ -154,6 +162,23 @@ public struct saveButton:ButtonStyle   {
             .cornerRadius(20)
             .accentColor(.black)
             .scaleEffect(isPressed ? 0.9 : 1.0)
+    }
+}
+
+// ¯\_(ツ)_/¯ from stackoverflow
+struct GeometryGetter: View {
+    @Binding var rect: CGRect
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Group { () -> ShapeView<Rectangle, Color> in
+                DispatchQueue.main.async {
+                    self.rect = geometry.frame(in: .global)
+                }
+                
+                return Rectangle().fill(Color.clear)
+            }
+        }
     }
 }
 
