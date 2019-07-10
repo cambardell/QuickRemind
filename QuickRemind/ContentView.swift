@@ -16,46 +16,60 @@ struct ContentView : View {
 
     var eventStore = EKEventStore()
     
+    
     var body: some View {
         VStack {
             Spacer()
-            Text("Remind me to \(reminderText) on \(reminderDate)")
+            Text("Remind me to \(reminderText) on \(formatDate())")
                 .lineLimit(nil)
                 .padding()
             
             DatePicker($reminderDate)
            
             HStack{
-                addTimeButton(reminderDate: reminderDate, timeToAdd: "Hour")
-                addTimeButton(reminderDate: reminderDate, timeToAdd: "Day")
-                addTimeButton(reminderDate: reminderDate, timeToAdd: "Week")
+                
+               
                 Spacer()
             }.padding()
+            
+            HStack {
+                    Button(action: {
+                        print("Tapped")
+                    }, label: {
+                            Text("Add Hour")
+                    }).buttonStyle(.addTime)
+                
+                    Button(action: {
+                        print("Tapped")
+                    }, label: {
+                        Text("Add Hour")
+                    }).buttonStyle(.addTime)
+                
+                    Button(action: {
+                        print("Tapped")
+                    }, label: {
+                        Text("Add Hour")
+                    }).buttonStyle(.addTime)
+                }
+            
+            
+            
             
             TextField("Remind me to...", text: $reminderText)
                 .padding()
                 .lineLimit(nil)
             
-
-            withAnimation{
-                Button(action: {
-                    self.saveReminder()
-                    
-                }) {
-                    Text("Save")
-                        .color(.black)
-                    
-                }
-                .padding()
-                    .background(Color.orange)
-                    .cornerRadius(20)
-            }
-            
+            Button(action: {
+                self.saveReminder()
+            }, label: {
+                Text("Save")
+            }).buttonStyle(.save)
             
            Spacer()
         }
        
     }
+    
     func saveReminder() {
         
         let reminder = EKReminder(eventStore: self.eventStore)
@@ -77,27 +91,51 @@ struct ContentView : View {
 
         reminderDate = Date()
     }
+    
+    func formatDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .short
+        
+        return dateFormatter.string(from: reminderDate)
+    }
 
 }
 
+extension StaticMember where Base: ButtonStyle {
+    static var addTime: StaticMember<addTimeButton> {
+        return .init(addTimeButton())
+    }
+    static var save: StaticMember<saveButton> {
+        return .init(saveButton())
+    }
+}
 
-struct addTimeButton : View {
-    var reminderDate: Date
-    var timeToAdd: String
-    
-    var body: some View {
-        return Button(action: {
-    
-        }) {
-            Text("Add \(timeToAdd)").color(.black)
-            }
+public struct addTimeButton:ButtonStyle   {
+   public func body(configuration: Button<Self.Label>, isPressed: Bool) -> some View {
+        configuration
             .padding()
             .background(Color(red: 99/255, green: 193/255, blue: 178/255, opacity: 1.0))
             .cornerRadius(20)
+            .accentColor(.black)
+            .scaleEffect(isPressed ? 0.9 : 1.0)
+
     }
-    
-   
 }
+
+public struct saveButton:ButtonStyle   {
+    public func body(configuration: Button<Self.Label>, isPressed: Bool) -> some View {
+        configuration
+            .padding()
+            .background(Color.orange)
+            .cornerRadius(20)
+            .accentColor(.black)
+            .scaleEffect(isPressed ? 0.9 : 1.0)
+        
+    }
+}
+
+
 
 
 
