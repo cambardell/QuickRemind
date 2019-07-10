@@ -16,15 +16,19 @@ struct ContentView : View {
 
     var eventStore = EKEventStore()
     
-    
     var body: some View {
         VStack {
             Spacer()
-            Text("Remind me to \(reminderText) on \(formatDate())")
+            Text("Remind me to \(formatReminderText()) on \(formatDate())")
                 .lineLimit(nil)
                 .padding()
+                .background(Color(red: 30/255, green: 225/255, blue: 230/255, opacity: 0.4))
+                .cornerRadius(20)
+            
             
             DatePicker($reminderDate)
+            
+            
             
             HStack {
                     Button(action: {
@@ -44,11 +48,15 @@ struct ContentView : View {
                     }, label: {
                         Text("Add Week")
                     }).buttonStyle(.addTime)
-                }
+                }.padding()
             
-            TextField("Remind me to...", text: $reminderText)
-                .padding()
+            TextField("Take out the trash", text: $reminderText)
+                .textFieldStyle(.roundedBorder)
+                .padding(.trailing)
+                .padding(.leading)
+                .padding(.bottom)
                 .lineLimit(nil)
+            
             
             Button(action: {
                 self.saveReminder()
@@ -57,8 +65,11 @@ struct ContentView : View {
             }).buttonStyle(.save)
             
            Spacer()
-        }
-       
+        }.background(Color(red: 250/255, green: 250/255, blue: 250/255))
+        
+        
+        
+        
     }
     
     func addTime(time: String) {
@@ -105,7 +116,14 @@ struct ContentView : View {
         
         return dateFormatter.string(from: reminderDate)
     }
-
+    
+    func formatReminderText() -> String {
+        if reminderText == "" {
+            return "take out the trash"
+        } else {
+            return reminderText.lowercased()
+        }
+    }
 }
 
 extension StaticMember where Base: ButtonStyle {
@@ -121,11 +139,10 @@ public struct addTimeButton:ButtonStyle   {
    public func body(configuration: Button<Self.Label>, isPressed: Bool) -> some View {
         configuration
             .padding()
-            .background(Color(red: 99/255, green: 193/255, blue: 178/255, opacity: 1.0))
+            .background(Color(red: 88/255, green: 231/255, blue: 252/255, opacity: 1.0))
             .cornerRadius(20)
             .accentColor(.black)
             .scaleEffect(isPressed ? 0.9 : 1.0)
-
     }
 }
 
@@ -133,18 +150,12 @@ public struct saveButton:ButtonStyle   {
     public func body(configuration: Button<Self.Label>, isPressed: Bool) -> some View {
         configuration
             .padding()
-            .background(Color.orange)
+            .background(Color(red: 50/255, green: 200/255, blue: 220/255))
             .cornerRadius(20)
             .accentColor(.black)
             .scaleEffect(isPressed ? 0.9 : 1.0)
-        
     }
 }
-
-
-
-
-
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {
