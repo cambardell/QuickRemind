@@ -25,35 +25,26 @@ struct ContentView : View {
                 .padding()
             
             DatePicker($reminderDate)
-           
-            HStack{
-                
-               
-                Spacer()
-            }.padding()
             
             HStack {
                     Button(action: {
-                        print("Tapped")
+                        self.addTime(time: "Hour")
                     }, label: {
                             Text("Add Hour")
                     }).buttonStyle(.addTime)
                 
                     Button(action: {
-                        print("Tapped")
+                       self.addTime(time: "Day")
                     }, label: {
-                        Text("Add Hour")
+                        Text("Add Day")
                     }).buttonStyle(.addTime)
                 
                     Button(action: {
-                        print("Tapped")
+                        self.addTime(time: "Week")
                     }, label: {
-                        Text("Add Hour")
+                        Text("Add Week")
                     }).buttonStyle(.addTime)
                 }
-            
-            
-            
             
             TextField("Remind me to...", text: $reminderText)
                 .padding()
@@ -68,6 +59,21 @@ struct ContentView : View {
            Spacer()
         }
        
+    }
+    
+    func addTime(time: String) {
+        if time == "Hour" {
+            let date = reminderDate.advanced(by: 3600)
+            reminderDate = date
+        }
+        if time == "Day" {
+            let date = reminderDate.advanced(by: 86400)
+            reminderDate = date
+        }
+        if time == "Week" {
+            let date = reminderDate.advanced(by: 604800)
+            reminderDate = date
+        }
     }
     
     func saveReminder() {
