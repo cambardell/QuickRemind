@@ -19,6 +19,9 @@ struct ContentView : View {
     var eventStore = EKEventStore()
     
     var body: some View {
+        
+        // Note: Dark mode doesn't work properly in current beta
+        
         VStack {
             Spacer()
             HStack {
@@ -30,6 +33,7 @@ struct ContentView : View {
             
             
             Text("Remind me to \(formatReminderText()) on \(formatDate()).")
+                .color(.black)
                 .lineLimit(nil)
                 .padding()
                 .background(Color(red: 30/255, green: 225/255, blue: 230/255, opacity: 0.4))
@@ -41,19 +45,25 @@ struct ContentView : View {
                     Button(action: {
                         self.addTime(time: "Hour")
                     }, label: {
-                            Text("Add Hour")
+                            Text("+Hour")
+                    }).buttonStyle(.addTime)
+                
+                    Button(action: {
+                        self.addTime(time: "Six")
+                    }, label: {
+                        Text("+6 Hours")
                     }).buttonStyle(.addTime)
                 
                     Button(action: {
                        self.addTime(time: "Day")
                     }, label: {
-                        Text("Add Day")
+                        Text("+Day")
                     }).buttonStyle(.addTime)
                 
                     Button(action: {
                         self.addTime(time: "Week")
                     }, label: {
-                        Text("Add Week")
+                        Text("+Week")
                     }).buttonStyle(.addTime)
                 }.padding()
             
@@ -74,14 +84,17 @@ struct ContentView : View {
                 .background(GeometryGetter(rect: $kGuardian.rects[0]))
             
            Spacer()
-        }.offset(y: kGuardian.slide).animation(.basic(duration: 1.0))
-            .background(Color(red: 250/255, green: 250/255, blue: 250/255))
-        
+        }.offset(y: kGuardian.slide).animation(.basic(duration: 0.3))
     }
+
     
     func addTime(time: String) {
         if time == "Hour" {
             let date = reminderDate.advanced(by: 3600)
+            reminderDate = date
+        }
+        if time == "Six" {
+            let date = reminderDate.advanced(by: 60*60*6)
             reminderDate = date
         }
         if time == "Day" {
@@ -146,7 +159,7 @@ extension StaticMember where Base: ButtonStyle {
 public struct addTimeButton:ButtonStyle   {
    public func body(configuration: Button<Self.Label>, isPressed: Bool) -> some View {
         configuration
-            .padding()
+            .padding(11.0)
             .background(Color(red: 88/255, green: 231/255, blue: 252/255, opacity: 1.0))
             .cornerRadius(20)
             .accentColor(.black)
