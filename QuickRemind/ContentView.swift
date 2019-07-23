@@ -13,6 +13,8 @@ struct ContentView : View {
     
     @State var reminderText: String = ""
     @State var reminderDate: Date = Date()
+    
+    let notificationCenter = UNUserNotificationCenter.current()
 
     var eventStore = EKEventStore()
     
@@ -112,9 +114,12 @@ struct ContentView : View {
         reminder.calendar = eventStore.defaultCalendarForNewReminders()
         reminder.dueDateComponents = components
         
+        if !reminderText.isEmpty {
+            scheduleNotification()
+        }
       
         do {
-            if reminderText != "" {
+            if !reminderText.isEmpty {
                 try eventStore.save(reminder,
                                     commit: true)
             }
@@ -140,6 +145,22 @@ struct ContentView : View {
             return "take out the trash"
         } else {
             return reminderText.lowercased()
+        }
+    }
+    
+    func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = reminderText
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.day, .hour, .minute], from: reminderDate), repeats: false)
+
+        let identifier = "Local Notification"
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            }
         }
     }
 }
@@ -175,22 +196,7 @@ public struct saveButton:ButtonStyle   {
     }
 }
 
-// ¯\_(ツ)_/¯ from stackoverflow
-struct GeometryGetter: View {
-    @Binding var rect: CGRect
-    
-    var body: some View {
-        GeometryReader { geometry in
-            Group { () -> ShapeView<Rectangle, Color> in
-                DispatchQueue.main.async {
-                    self.rect = geometry.frame(in: .global)
-                }
-                
-                return Rectangle().fill(Color.clear)
-            }
-        }
-    }
-}
+
 
 #if DEBUG
 struct ContentView_Previews : PreviewProvider {

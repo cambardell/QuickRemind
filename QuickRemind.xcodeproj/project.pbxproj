@@ -24,6 +24,7 @@
 		FC9D23DD22CE907300BBEDA3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FC9D23E022CE907300BBEDA3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FC9D23E222CE907300BBEDA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FCF4DE5D22E7833C00759B1C /* QuickRemind.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = QuickRemind.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +58,7 @@
 		FC9D23D322CE907300BBEDA3 /* QuickRemind */ = {
 			isa = PBXGroup;
 			children = (
+				FCF4DE5D22E7833C00759B1C /* QuickRemind.entitlements */,
 				FC9D23D422CE907300BBEDA3 /* AppDelegate.swift */,
 				FC9D23D622CE907300BBEDA3 /* SceneDelegate.swift */,
 				FC9D23D822CE907300BBEDA3 /* ContentView.swift */,
@@ -284,6 +286,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickRemind/QuickRemind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "QuickRemind/Preview\\ Content";
 				DEVELOPMENT_TEAM = N2WWEZ627P;
@@ -304,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = QuickRemind/QuickRemind.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "QuickRemind/Preview\\ Content";
 				DEVELOPMENT_TEAM = N2WWEZ627P;
