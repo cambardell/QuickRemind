@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FC1C7DB622D661E200A5177D /* KeyboardGuardian.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1C7DB522D661E200A5177D /* KeyboardGuardian.swift */; };
 		FC3F1B9C22D7A24F007E7F64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC3F1B9B22D7A24F007E7F64 /* Assets.xcassets */; };
 		FC9D23D522CE907300BBEDA3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9D23D422CE907300BBEDA3 /* AppDelegate.swift */; };
 		FC9D23D722CE907300BBEDA3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9D23D622CE907300BBEDA3 /* SceneDelegate.swift */; };
@@ -17,7 +16,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FC1C7DB522D661E200A5177D /* KeyboardGuardian.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardGuardian.swift; sourceTree = "<group>"; };
 		FC3F1B9B22D7A24F007E7F64 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FC9D23D122CE907300BBEDA3 /* QuickRemind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuickRemind.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC9D23D422CE907300BBEDA3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,7 +60,6 @@
 				FC9D23D422CE907300BBEDA3 /* AppDelegate.swift */,
 				FC9D23D622CE907300BBEDA3 /* SceneDelegate.swift */,
 				FC9D23D822CE907300BBEDA3 /* ContentView.swift */,
-				FC1C7DB522D661E200A5177D /* KeyboardGuardian.swift */,
 				FC9D23DF22CE907300BBEDA3 /* LaunchScreen.storyboard */,
 				FC9D23E222CE907300BBEDA3 /* Info.plist */,
 				FC9D23DC22CE907300BBEDA3 /* Preview Content */,
@@ -150,7 +147,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC9D23D522CE907300BBEDA3 /* AppDelegate.swift in Sources */,
-				FC1C7DB622D661E200A5177D /* KeyboardGuardian.swift in Sources */,
 				FC9D23D722CE907300BBEDA3 /* SceneDelegate.swift in Sources */,
 				FC9D23D922CE907300BBEDA3 /* ContentView.swift in Sources */,
 			);

@@ -10,8 +10,6 @@ import SwiftUI
 import EventKit
 
 struct ContentView : View {
-    @ObjectBinding private var kGuardian = KeyboardGuardian(textFieldCount: 1)
-    @State private var name = Array<String>.init(repeating: "", count: 1)
     
     @State var reminderText: String = ""
     @State var reminderDate: Date = Date()
@@ -23,7 +21,6 @@ struct ContentView : View {
         // Note: Dark mode doesn't work properly in current beta
         
         VStack {
-            Spacer()
             HStack {
                 Text("Add a reminder")
                     .font(.largeTitle)
@@ -33,7 +30,7 @@ struct ContentView : View {
             
             
             Text("Remind me to \(formatReminderText()) on \(formatDate()).")
-                .color(.black)
+                .foregroundColor(.black)
                 .lineLimit(nil)
                 .padding()
                 .background(Color(red: 30/255, green: 225/255, blue: 230/255, opacity: 0.4))
@@ -81,10 +78,10 @@ struct ContentView : View {
             }, label: {
                 Text("Save")
             }).buttonStyle(.save)
-                .background(GeometryGetter(rect: $kGuardian.rects[0]))
-            
-           Spacer()
-        }.offset(y: kGuardian.slide).animation(.basic(duration: 0.3))
+                
+            Spacer()
+      
+        }
     }
 
     
