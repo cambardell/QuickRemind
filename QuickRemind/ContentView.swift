@@ -32,7 +32,7 @@ struct ContentView : View {
             }
             
             
-            Text("Remind me to \(formatReminderText()) on \(formatDate()).")
+            Text("Remind me: \(formatReminderText()) on \(formatDate()).")
                 .foregroundColor(.black)
                 .lineLimit(nil)
                 .padding()
@@ -150,7 +150,7 @@ struct ContentView : View {
         if reminderText == "" {
             return "take out the trash"
         } else {
-            return reminderText.lowercased()
+            return reminderText
         }
     }
     
