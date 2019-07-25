@@ -13,6 +13,7 @@ struct ContentView : View {
     
     @State var reminderText: String = ""
     @State var reminderDate: Date = Date()
+    @ObjectBinding private var kGuardian = KeyboardGuardian(textFieldCount: 1)
     
     let notificationCenter = UNUserNotificationCenter.current()
 
@@ -38,7 +39,11 @@ struct ContentView : View {
                 .background(Color(red: 30/255, green: 225/255, blue: 230/255, opacity: 0.4))
                 .cornerRadius(20)
             
-            DatePicker($reminderDate)
+            DatePicker(
+                selection: $reminderDate,
+                displayedComponents: .date,
+                label: { Text("Due Date") }
+            )
             
             HStack {
                     Button(action: {
@@ -68,10 +73,9 @@ struct ContentView : View {
             
             TextField("Take out the trash", text: $reminderText)
                 .textFieldStyle(.roundedBorder)
-                .padding(.trailing)
-                .padding(.leading)
-                .padding(.bottom)
+                .padding([.trailing, .leading, .bottom])
                 .lineLimit(nil)
+                
             
             
             
@@ -80,10 +84,12 @@ struct ContentView : View {
             }, label: {
                 Text("Save")
             }).buttonStyle(.save)
+            .background(GeometryGetter(rect: $kGuardian.rects[0]))
                 
             Spacer()
       
-        }
+        }.offset(y: kGuardian.slide).animation(.spring(response: 0.3, dampingFraction: 0.3, blendDuration: 0.0))
+
     }
 
     
@@ -196,6 +202,21 @@ public struct saveButton:ButtonStyle   {
     }
 }
 
+struct GeometryGetter: View {
+    @Binding var rect: CGRect
+
+    var body: some View {
+        GeometryReader { geometry in
+            Group { () -> ShapeView<Rectangle, Color> in
+                DispatchQueue.main.async {
+                    self.rect = geometry.frame(in: .global)
+                }
+
+                return Rectangle().fill(Color.clear)
+            }
+        }
+    }
+}
 
 
 #if DEBUG
